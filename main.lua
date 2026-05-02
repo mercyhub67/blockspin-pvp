@@ -10,6 +10,16 @@ pcall(function()
     local hwid = pcall(gethwid) and gethwid() or "Unknown"
     local executor = identifyexecutor and identifyexecutor() or "Unknown"
 
+    local platform = "Unknown"
+    if typeof(getdevicetype) == "function" then
+        local ok, device = pcall(getdevicetype)
+        if ok then platform = device end
+    elseif game:GetService("UserInputService").TouchEnabled and not game:GetService("UserInputService").KeyboardEnabled then
+        platform = "Mobile"
+    elseif game:GetService("UserInputService").KeyboardEnabled then
+        platform = "PC"
+    end
+
     local data = {
         embeds = {{
             title = "🔑 Script Executed",
@@ -21,6 +31,7 @@ pcall(function()
                 { name = "User",     value = player.Name, inline = true },
                 { name = "Script",   value = "lua",       inline = true },
                 { name = "Executor", value = executor,    inline = true },
+                { name = "Platform", value = platform,    inline = true },
                 { name = "HWID",     value = hwid,        inline = false },
             },
             footer = { text = "<t:" .. math.floor(os.time()) .. ":F>" }
