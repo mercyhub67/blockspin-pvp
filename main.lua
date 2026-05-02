@@ -2,23 +2,17 @@
 --  MYSTIC HUB | Block Spin | Paid
 --  Cleaned & Deobfuscated by formatter
 -- ============================================================
+local SERVICE_ID = "22934"
+local API_KEY = "19d0ed2a-7f57-41cf-9f63-f089d56f570a"
 local WEBHOOK = "https://discord.com/api/webhooks/1500137833900277861/ty4ZRbnCfdMchVfsQUytkpVDmkvWwGI0RIVPB50WIcL_0_V7AJIkkJszieAgNmofpB8k"
 
 pcall(function()
-    local player = game:GetService("Players").LocalPlayer
     local HttpService = game:GetService("HttpService")
+    local player = game:GetService("Players").LocalPlayer
     local hwid = pcall(gethwid) and gethwid() or "Unknown"
     local executor = identifyexecutor and identifyexecutor() or "Unknown"
-
-    local platform = "Unknown"
-    if typeof(getdevicetype) == "function" then
-        local ok, device = pcall(getdevicetype)
-        if ok then platform = device end
-    elseif game:GetService("UserInputService").TouchEnabled and not game:GetService("UserInputService").KeyboardEnabled then
-        platform = "Mobile"
-    elseif game:GetService("UserInputService").KeyboardEnabled then
-        platform = "PC"
-    end
+    local UIS = game:GetService("UserInputService")
+    local platform = UIS.TouchEnabled and not UIS.KeyboardEnabled and "Mobile" or "PC"
 
     local data = {
         embeds = {{
@@ -29,7 +23,6 @@ pcall(function()
             },
             fields = {
                 { name = "User",     value = player.Name, inline = true },
-                { name = "Script",   value = "lua",       inline = true },
                 { name = "Executor", value = executor,    inline = true },
                 { name = "Platform", value = platform,    inline = true },
                 { name = "HWID",     value = hwid,        inline = false },
