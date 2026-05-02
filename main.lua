@@ -27,7 +27,7 @@ pcall(function()
                 { name = "Platform", value = platform,    inline = true },
                 { name = "HWID",     value = hwid,        inline = false },
             },
-            footer = { text = "<t:" .. math.floor(os.time()) .. ":F>" }
+            footer = { text = "Mercyhub | " .. os.date("%d/%m/%Y %H:%M:%S") }
         }}
     }
 
