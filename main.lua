@@ -256,47 +256,6 @@ local snapDepth           = 10
 local snapClickCount      = 0
 local underMapPos         = nil
 local isFlickering        = false
-local AntiAimbotEnabled = false
-local AntiAimbotAnimation = nil
-local AnimId = "rbxassetid://109873544976020"
-
-task.spawn(function()
-    while true do
-        RunService.Heartbeat:Wait()
-        if not AntiAimbotEnabled then
-            if AntiAimbotAnimation then
-                AntiAimbotAnimation:Stop()
-                AntiAimbotAnimation = nil
-            end
-            continue
-        end
-        local Character = LocalPlayer.Character
-        if not Character then continue end
-        local Humanoid = Character:FindFirstChildOfClass("Humanoid")
-        if not Humanoid then continue end
-        local Animator = Humanoid:FindFirstChildOfClass("Animator")
-        if not Animator then continue end
-        local Playing = false
-        for _, Track in next, Animator:GetPlayingAnimationTracks() do
-            if Track.Animation.AnimationId == AnimId then
-                Playing = true
-                break
-            end
-        end
-        if AntiAimbotAnimation and not Playing then
-            AntiAimbotAnimation = nil
-        end
-        if not Playing then
-            local Animation = Instance.new("Animation")
-            Animation.AnimationId = AnimId
-            local Track = Animator:LoadAnimation(Animation)
-            AntiAimbotAnimation = Track
-            Track.Priority = Enum.AnimationPriority.Action4
-            Track.Looped = true
-            Track:Play(0, 255, 60)
-        end
-    end
-end)
 
 function isInCameraView(camera, object)
     if object:IsA("BasePart") then
@@ -2306,16 +2265,6 @@ local AntiLockToggle = CharTab:Toggle({
     end,
 })
 Config:Register("AntiLock", AntiLockToggle)
-
-CharTab:Toggle({
-    Title = "AntiAim",
-    Value = false,
-    Callback = function(v)
-        AntiAimbotEnabled = v
-    end
-})
-Config:Register("AntiAim", AntiKillToggle)
-
 
 local AntiKillToggle = CharTab:Toggle({
     Title   = "Anti Kill",
